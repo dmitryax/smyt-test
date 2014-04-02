@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from app.models import dynamic_models
+
+
+for model in dynamic_models:
+    admin.site.register(model)
