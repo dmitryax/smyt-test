@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+
+<body>
+    <div class="menu">
+        <ul>
+            {% for model, model_name in models %}
+                <li><a href="#" data-model={{ model }}>{{ model_name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="content">
+
+    </div>
+
+    <div class="clear"></div>
+</body>
+</html>
