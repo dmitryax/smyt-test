@@ -1,6 +1,7 @@
 import os
 
 import yaml
+import json
 
 from django.db import models
 
@@ -15,6 +16,7 @@ def get_model(model_name, model_def):
     fields['__module__'] = __name__
     fields['Meta'] = type('Meta', (), {"verbose_name": model_def['title'],
                                        "verbose_name_plural": model_def['title']})
+    fields["_schema_json"] = json.dumps(model_def['fields'])
     return type(model_name.capitalize(), (models.Model,), fields)
 
 

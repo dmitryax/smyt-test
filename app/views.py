@@ -4,5 +4,7 @@ from app.models import dynamic_models
 
 
 def index(request):
-    models = ((model.__name__, model._meta.verbose_name) for model in dynamic_models)
+    models = [(model.__name__, model._meta.verbose_name, 
+               model._schema_json) for model in dynamic_models]
     return render(request, 'index.html', {'models': models})
+
