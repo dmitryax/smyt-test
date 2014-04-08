@@ -15,6 +15,10 @@
 
 .grid {
     border: 1px solid rgb(212,212,212);
-    width: 700px; 
-    height: 700px;
+    width: 800px; 
+    height: 300px;
+}
+
+.ngRow.selected {
+    background-color: #ef3d47 !important;
 }
