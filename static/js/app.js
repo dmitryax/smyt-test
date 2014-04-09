@@ -26,8 +26,7 @@ app.controller('ModelsCtrl', function ($scope, $resource) {
             if (dataTypes[key] === 'int' && !(_.isNumber(val) || val.match(/^\d+$/))) {
                 valid = false;
                 errors += 'Поле "' + dataTitles[key] + '" должно содержать целое число;\n';
-            } else if (dataTypes[key] === 'date' && 
-                       !(_.isDate(val) || val.match(dateRegEx))) {
+            } else if (dataTypes[key] === 'date' && !(_.isDate(val) || val.match(dateRegEx))) {
                 valid = false;
                 errors += 'Поле "' + dataTitles[key] + 
                           '" должно быть датой в формате YYYY-MM-DD;\n';
@@ -39,6 +38,10 @@ app.controller('ModelsCtrl', function ($scope, $resource) {
         }
         return valid;
     };
+
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd'
+    });
 
     $scope.models = models;
     $scope.resources = {};
@@ -61,12 +64,8 @@ app.controller('ModelsCtrl', function ($scope, $resource) {
         }
     }
 
-    $scope.getApiUrl = function (modelName) {
-        return '/api/' + modelName.toLowerCase() + '/';
-    }
-
     angular.forEach($scope.models, function (value, key) {
-       this[key] = $resource($scope.getApiUrl(key) + ':id', null, {update: {method: 'PUT'}});
+       this[key] = $resource('/api/' + key.toLowerCase() + '/:id', null, {update: {method: 'PUT'}});
      }, $scope.resources);
 
     $scope.$watch('currentModel.id', function (newModel) {
@@ -77,7 +76,7 @@ app.controller('ModelsCtrl', function ($scope, $resource) {
                 column = {field: el['id'], displayName: el['title'], enableCellEdit: true};
                 if (el['type'] === 'date') {
                     column['editableCellTemplate'] = '<input type="text" ' +
-                                                     'datepicker2 ng-model="COL_FIELD" />';
+                                                     'datepicker-in-grid ng-model="COL_FIELD" />';
                 }
                 this.push(column)
              }, $scope.gridDefs);
@@ -85,7 +84,7 @@ app.controller('ModelsCtrl', function ($scope, $resource) {
         }
     });
 
-    $scope.currentModel = {id: "Users"};
+    $scope.currentModel = {id: _.pairs($scope.models)[0][0]};
 
     $scope.gridData = [];
     $scope.gridDefs = [];
@@ -122,11 +121,10 @@ app.controller('ModelsCtrl', function ($scope, $resource) {
     }());
 });
 
-app.directive('datepicker2', function() {
+app.directive('datepickerInGrid', function() {
     return {
         link: function(scope, element, attrs) {
             var options = {
-                dateFormat: 'yy-mm-dd',
                 onClose: function () {
                     scope.$emit('ngGridEventEndCellEdit');
                 }
@@ -135,6 +133,16 @@ app.directive('datepicker2', function() {
                 date = evt.targetScope.row.entity[evt.targetScope.col.field];
                 element.datepicker(options).datepicker('setDate', date).datepicker("show");
             });
+        }
+    };
+});
+
+app.directive('conitionalDatepicker', function() {
+    return {
+        link: function(scope, element, attrs) {
+            if (attrs['fieldType'] === 'date') {
+                element.datepicker();
+            }
         }
     };
 });

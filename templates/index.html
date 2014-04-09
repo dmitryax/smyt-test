@@ -42,7 +42,7 @@
                     <fieldset>
                         <div class="form-group" ng-repeat="field in models[currentModel.id].schema">
                             <label class="control-label" for="{[ field.id ]}-field">{[ field.title ]}</label>
-                            <input class="form-control" id="{[ field.id ]}-field" name="{[ field.id ]}" type="text" ng-model='newRecord[field.id]' required />
+                            <input class="form-control" name="{[ field.id ]}" type="text" ng-model='newRecord[field.id]' data-field-type="{[ field.type ]}" conitional-datepicker />
                         </div>
                     </fieldset>
                     <button type="submit" class="btn btn-primary" id="newRecordSubmmitBtn">Добавить</button>
