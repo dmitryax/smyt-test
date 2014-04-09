@@ -10,3 +10,9 @@ rooms:
     fields:
         - {id: department, title: Отдел, type: char}
         - {id: spots, title: Вместимость, type: int}
+
+countries:
+    title: Страны
+    fields:
+        - {id: name, title: Название, type: char}
+        - {id: population, title: Население, type: int}
