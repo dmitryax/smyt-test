@@ -9,7 +9,7 @@ from app.models import dynamic_models
 admin.autodiscover()
 
 # Registering REST Interface for the dynamic models
-router = routers.DefaultRouter()
+router = routers.DefaultRouter(trailing_slash=False)
 for model in dynamic_models:
     viewset = type(model.__name__ + 'ViewSet', (viewsets.ModelViewSet,), {'model': model})
     router.register(model.__name__.lower(), viewset)
