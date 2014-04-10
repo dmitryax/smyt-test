@@ -8,6 +8,8 @@ from app.models import dynamic_models
 
 admin.autodiscover()
 
+API_PREFIX = 'api/'
+
 # Registering REST Interface for the dynamic models
 router = routers.DefaultRouter(trailing_slash=False)
 for model in dynamic_models:
@@ -17,5 +19,5 @@ for model in dynamic_models:
 urlpatterns = patterns('',    
     url(r'^$', 'app.views.index', name='index'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/', include(router.urls))
+    url(r'^%s' % API_PREFIX, include(router.urls))
 )
