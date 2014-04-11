@@ -36,16 +36,24 @@
         <div class="grid" ng-grid="gridOptions"></div>
         
         <div class="panel panel-default">
-            <div class="panel-heading">Добавить новую запись '{[ models[currentModel.id]['title'] ]}'</div>
+            <div class="panel-heading">
+                Добавить новую запись '{[ models[currentModel.id]['title'] ]}'
+            </div>
             <div class="panel-body">
                 <form ng-submit="addNewRecord()" id="newRecordForm" role="form">
                     <fieldset>
                         <div class="form-group" ng-repeat="field in models[currentModel.id].schema">
-                            <label class="control-label" for="{[ field.id ]}-field">{[ field.title ]}</label>
-                            <input class="form-control" name="{[ field.id ]}" type="text" ng-model='newRecord[field.id]' data-field-type="{[ field.type ]}" conitional-datepicker />
+                            <label class="control-label" for="{[ field.id ]}-field">
+                                {[ field.title ]}
+                            </label>
+                            <input class="form-control" name="{[ field.id ]}" type="text" 
+                                   ng-model='newRecord[field.id]' data-field-type="{[ field.type ]}" 
+                                   conitional-datepicker required/>
                         </div>
                     </fieldset>
-                    <button type="submit" class="btn btn-primary" id="newRecordSubmmitBtn">Добавить</button>
+                    <button type="submit" class="btn btn-primary" id="newRecordSubmmitBtn">
+                        Добавить
+                    </button>
                 </form>
             </div>
         </div>
